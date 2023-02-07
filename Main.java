@@ -1,19 +1,19 @@
-import java.util.Scanner;
+import javax.swing.*;
 
 class Main {
     public static void main(String[] args) {
-        String postCode;
-        Scanner scan = new Scanner(System.in);
-        
-        System.out.println("Welcome to the Postal to Barcode Translator (Please enter 5 integers)");
+        String postCode = " ";
+        JFrame window = new JFrame();
+        Methods p = new Methods();
         do{
-            System.out.println("Enter your postal code: ");
-            postCode = scan.next();
+            try{
+                postCode = JOptionPane.showInputDialog(window, "Enter a Postal Code to Translate\nPlease only enter 5 digits");
+            }
+            catch(NumberFormatException e){
+            }
+        if(postCode == null) System.exit(0);
         }
         while(postCode.length() != 5);
-        
-        Methods p = new Methods(postCode);
-        System.out.println(p.translate());
-        scan.close();
+        JOptionPane.showMessageDialog(window, "Your Postal Code in Binary:\n" + p.translate(postCode));
     }
 }
