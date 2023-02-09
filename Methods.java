@@ -1,15 +1,45 @@
-public class Methods {
-    private String barCode = "";
-    private String key[] = {"||:::", ":::||", "::|:|", "::||:", ":|::|", ":|:|:", ":||::", "|:::|", "|::|:", "|:|::"};
-    private int split[] = new int[5];
-    private int total = 0;
+import java.lang.Math;
 
-    public String translate(String postCode){
-        for (int i = 0; i < 5; i++){
-          split[i] = Integer.parseInt(postCode.substring(i, i + 1));
-          barCode += key[split[i]]+" ";
-          total += split[i];
-        }
-        return barCode += key[(total % 10)];
+public class Methods {
+  private String postCode;
+  private String barCode = "", binaryCode = "";
+  private String binaryKey[] = {"11000", "00011", "00101", "00110", "01001", "01010", "01100", "10001", "10010", "10100"};
+  private String barKey[] = {"||:::", ":::||", "::|:|", "::||:", ":|::|", ":|:|:", ":||::", "|:::|", "|::|:", "|:|::"};
+  private int split[] = new int[5];
+  private int total = 0;
+  private int correctionDigit = 0;
+
+  public Methods(String postCode){
+      this.postCode = postCode;
+      splitByDigit();
+      calculateCorrectionDigit();
+  }
+
+  public void splitByDigit(){
+    for(int i = 0; i < postCode.length(); i++){
+      split[i] = Integer.parseInt(postCode.substring(i, i + 1));
     }
+  }
+
+  public String convertToBinaryCode(){
+    for(int i = 0; i < split.length; i++){
+      binaryCode += " "+binaryKey[split[i]];
+
+    }
+    return binaryCode += " " + binaryKey[correctionDigit];
+  }
+
+  public String convertToBarCode(){
+    for (int i = 0; i < split.length; i++){
+      barCode += " "+barKey[split[i]];
+    }
+    return barCode += " " + barKey[correctionDigit];
+  }
+
+  public void calculateCorrectionDigit(){
+    for(int i = 0; i < split.length; i++){
+        total += split[i];
+    }
+    correctionDigit = Math.abs(0 - (total % 10));
+  }
 }
