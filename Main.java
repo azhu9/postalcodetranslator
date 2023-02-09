@@ -15,6 +15,6 @@ class Main {
         while(postCode.length() != 5);
 
         Methods p = new Methods(postCode);
-        JOptionPane.showMessageDialog(window, postCode+" expressed in binary format is:\n" + p.convertToBinaryCode() +"\nand expressed in bar code format is:\n" + p.convertToBarCode());
+        JOptionPane.showMessageDialog(window, postCode+" expressed in binary format is:\n" + p.compileBinaryCode() +"\nand expressed in bar code format is:\n" + p.compileBarCode());
     }
 }

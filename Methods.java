@@ -1,5 +1,3 @@
-import java.lang.Math;
-
 public class Methods {
   private String postCode;
   private String barCode = "", binaryCode = "";
@@ -23,23 +21,43 @@ public class Methods {
 
   public String convertToBinaryCode(){
     for(int i = 0; i < split.length; i++){
-      binaryCode += " "+binaryKey[split[i]];
-
+      if(i == 0){
+        binaryCode += binaryKey[split[i]];
+      }
+      else{
+        binaryCode += " "+binaryKey[split[i]];
+      }
     }
-    return binaryCode += " " + binaryKey[correctionDigit];
+    return binaryCode;
   }
 
   public String convertToBarCode(){
     for (int i = 0; i < split.length; i++){
-      barCode += " "+barKey[split[i]];
-    }
-    return barCode += " " + barKey[correctionDigit];
+      if(i == 0){
+        barCode += barKey[split[i]];
+      }
+      else{
+        barCode += " "+barKey[split[i]];
+      }    }
+    return barCode;
   }
 
   public void calculateCorrectionDigit(){
     for(int i = 0; i < split.length; i++){
         total += split[i];
     }
-    correctionDigit = Math.abs(0 - (total % 10));
+    if(total % 10 != 0){
+      correctionDigit = (10 - (total % 10));
+    }
+    System.out.println(correctionDigit);
+  }
+
+  public String compileBinaryCode(){
+    return "1" + convertToBinaryCode() + " " + binaryKey[correctionDigit] + "1";
+  }
+
+  public String compileBarCode(){
+    return "|" + convertToBarCode() + " " + barKey[correctionDigit] + "|";
   }
 }
+
